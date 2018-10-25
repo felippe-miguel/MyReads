@@ -23,6 +23,7 @@ class Bookshelf extends Component {
             {this.props.books.map((book) =>
               <li key={book.title}>
                 <Book
+                book={book}
                 image={book.image}
                 title={book.title}
                 authors={book.authors}
