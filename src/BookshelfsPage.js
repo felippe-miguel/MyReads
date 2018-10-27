@@ -29,6 +29,21 @@ class BookshelfsPage extends Component {
       }))
     })
   }
+
+  update = (shelf, id) => {
+    let old_books = this.state.books.slice()
+    
+    let new_books = old_books.map((book) => {
+      if (book.id === id) {
+        book.shelf = shelf
+      }
+      return book
+    })
+
+    this.setState({
+      books: new_books
+    })
+  }
   
   render() {
     return (
@@ -40,6 +55,9 @@ class BookshelfsPage extends Component {
           <div>
             {this.state.shelfs.map((shelf) =>
               <Bookshelf
+              onUpdate={(shelf, id) => {
+                this.update(shelf, id)}
+              }
               key={shelf.tag}
               title={shelf.title}
               books={this.state.books.filter((book) => 

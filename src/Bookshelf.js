@@ -2,16 +2,10 @@ import React, { Component } from 'react'
 import Book from './Book'
 
 class Bookshelf extends Component {
-  state = {
-    books: []
-  }
-
-  addBook = () => {
-    
-  }
-
-  removeBook = () => {
-
+  update = (shelf, index) => {
+    if (this.props.onUpdate) {
+      this.props.onUpdate(shelf, index)
+    }
   }
 
   render() {
@@ -22,12 +16,7 @@ class Bookshelf extends Component {
           <ol className="books-grid">
             {this.props.books.map((book) =>
               <li key={book.title}>
-                <Book
-                book={book}
-                image={book.image}
-                title={book.title}
-                authors={book.authors}
-                />
+                <Book onUpdate={ (shelf) => {this.update(shelf, book.id)} } book={book} />
               </li>
             )}
           </ol>
