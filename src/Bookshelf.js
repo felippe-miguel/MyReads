@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import Book from './Book'
 
 class Bookshelf extends Component {
-  update = (shelf, index) => {
+  update = (book, shelf) => {
     if (this.props.onUpdate) {
-      this.props.onUpdate(shelf, index)
+      this.props.onUpdate(book, shelf)
     }
   }
 
@@ -16,7 +16,11 @@ class Bookshelf extends Component {
           <ol className="books-grid">
             {this.props.books.map((book) =>
               <li key={book.title}>
-                <Book onUpdate={ (shelf) => {this.update(shelf, book.id)} } book={book} />
+                <Book onUpdate={(new_book, shelf) => {
+                  this.update(new_book, shelf)}
+                }
+                book={book}
+                />
               </li>
             )}
           </ol>

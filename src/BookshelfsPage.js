@@ -1,50 +1,15 @@
 import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
 import Bookshelf from './Bookshelf'
 import { Link } from 'react-router-dom'
 
 class BookshelfsPage extends Component {
-  state = {
-    books: [],
-    shelfs: [
-      {
-        title: 'Currently Reading',
-        tag: 'currentlyReading'
-      },
-      {
-        title: 'Want to Read',
-        tag: 'wantToRead'
-      },
-      {
-        title: 'Read',
-        tag: 'read'
-      },
-    ]
+
+  update = (new_book, new_shelf) => {
+    if (this.props.onUpdate) {
+      this.props.onUpdate(new_book, new_shelf)
+    }
   }
 
-  componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      this.setState(() => ({
-        books
-      }))
-    })
-  }
-
-  update = (shelf, id) => {
-    let old_books = this.state.books.slice()
-    
-    let new_books = old_books.map((book) => {
-      if (book.id === id) {
-        book.shelf = shelf
-      }
-      return book
-    })
-
-    this.setState({
-      books: new_books
-    })
-  }
-  
   render() {
     return (
       <div className="list-books">
@@ -53,14 +18,14 @@ class BookshelfsPage extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            {this.state.shelfs.map((shelf) =>
+            {this.props.shelfs.map((shelf) =>
               <Bookshelf
-              onUpdate={(shelf, id) => {
-                this.update(shelf, id)}
+              onUpdate={(new_book, new_shelf) => {
+                this.update(new_book, new_shelf)}
               }
               key={shelf.tag}
               title={shelf.title}
-              books={this.state.books.filter((book) => 
+              books={this.props.books.filter((book) => 
                 book.shelf === shelf.tag
               )}
               />

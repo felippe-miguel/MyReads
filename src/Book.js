@@ -8,7 +8,7 @@ class Book extends Component {
     BooksAPI.update(this.props.book, shelf)
 
     if (this.props.onUpdate) {
-      this.props.onUpdate(shelf)
+      this.props.onUpdate(this.props.book, shelf)
     }
   }
 
